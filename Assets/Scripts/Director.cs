@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public static class Director
 {
@@ -11,6 +12,10 @@ public static class Director
 
     public static Vector2 GetPlayerPosition(){
         return playerPosition;
+    }
+
+    public static void RestartScene(){
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
 }
