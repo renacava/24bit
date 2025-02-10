@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
@@ -7,7 +8,7 @@ public class Player : MonoBehaviour
     float speedX, speedY;
     public float health = 100;
     Rigidbody2D playerRigidBody;
-
+    List<ContactPoint2D> contacts = new List<ContactPoint2D>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,7 +35,9 @@ public class Player : MonoBehaviour
 
 
     void ProcessDamage(){
-        if (playerRigidBody.IsTouchingLayers())
+        
+        playerRigidBody.GetContacts(contacts);
+        if (contacts.Count > 0)
             TakeDamage();
         if (health <= 0)
             Director.RestartScene();
