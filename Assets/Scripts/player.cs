@@ -1,24 +1,31 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
 
+    //movement
     public float movementSpeed = 10;
     float speedX, speedY;
-    public float health = 100;
+    
+    //collision
     Rigidbody2D playerRigidBody;
     List<ContactPoint2D> contacts = new List<ContactPoint2D>();
     List<GameObject> touchedGameObjects = new List<GameObject>();
     bool isTouchingEnemy = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    //health
+    public float maxHealth = 100;
+    public float health = 1;
+    public Image healthbarImage;
+    
     void Start()
     {
         InitialiseRigidBody();
+        ResetHealth();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         ProcessDamage();
@@ -28,6 +35,10 @@ public class Player : MonoBehaviour
     void InitialiseRigidBody(){
         playerRigidBody = GetComponent<Rigidbody2D>();
         playerRigidBody.gravityScale = 0;
+    }
+
+    void ResetHealth(){
+        health = maxHealth;
     }
 
     void MovePlayer(){
@@ -43,6 +54,7 @@ public class Player : MonoBehaviour
             TakeDamage();
         if (health <= 0)
             Director.RestartScene();
+        UpdateHealthbar();
     }
 
     void TakeDamage(){
@@ -68,5 +80,8 @@ public class Player : MonoBehaviour
         }
     }
 
+    void UpdateHealthbar(){
+        healthbarImage.fillAmount = health / maxHealth;
+    }
 
 }
