@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class player : MonoBehaviour
+public class Player : MonoBehaviour
 {
 
     public float movementSpeed = 10;
@@ -19,6 +19,7 @@ public class player : MonoBehaviour
     void FixedUpdate()
     {
         movePlayer();
+        Director.UpdatePlayerPosition((Vector2)transform.position);
     }
 
     void movePlayer(){
