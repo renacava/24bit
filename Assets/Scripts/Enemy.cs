@@ -1,24 +1,29 @@
 using UnityEngine;
 
-public class enemy : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
 
     public float movementSpeed = 1.25f;
+    public float maxHealth = 2f;
+    public float health = 2f;
     Rigidbody2D enemyRigidBody;
     Vector2 target;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        enemyRigidBody = GetComponent<Rigidbody2D>();
-        enemyRigidBody.gravityScale = 0;
+        SetupRigidbody();
+        ResetHealth();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         UpdateTarget();
         MoveTowardsTarget();
+    }
+
+    void SetupRigidbody(){
+        enemyRigidBody = GetComponent<Rigidbody2D>();
+        enemyRigidBody.gravityScale = 0;
     }
 
     void UpdateTarget(){
@@ -26,11 +31,26 @@ public class enemy : MonoBehaviour
     }
 
     void MoveTowardsTarget(){
+        enemyRigidBody.linearVelocity = CalculateTargetDirection() * movementSpeed;
+    }
+
+    Vector2 CalculateTargetDirection(){
         Vector2 targetHeading = target - (Vector2)transform.position;
         float targetDistance = targetHeading.magnitude;
-        Vector2 targetDirection = targetHeading / targetDistance;
+        return targetHeading / targetDistance;;
+    }
 
-        enemyRigidBody.linearVelocity = targetDirection * movementSpeed;
+    void ResetHealth(){
+        health = maxHealth;
+    }
 
+    public void TakeDamage(float amount){
+        health -= amount;
+        if (health <= 0)
+            Die();
+    }
+
+    void Die(){
+        Destroy(gameObject);
     }
 }

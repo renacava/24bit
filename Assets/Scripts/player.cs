@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     //movement
     public float movementSpeed = 10;
     float speedX, speedY;
+    Vector2 lastMovementDirection = new Vector2(1, 0);
+    Vector2 movementDirection = new Vector2(0, 0);
     
     //collision
     Rigidbody2D playerRigidBody;
@@ -22,6 +24,7 @@ public class Player : MonoBehaviour
 
     //bullets
     public GameObject bulletPrefab;
+    public GameObject bulletSpawner;
     
     void Start()
     {
@@ -31,7 +34,15 @@ public class Player : MonoBehaviour
 
     void Update(){
         if (Input.GetKeyDown(KeyCode.Space)){
-            Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            Vector2 spawnPosition = bulletSpawner.transform.position;
+            
+            //GameObject newBullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
+            Bullet newBullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity).GetComponent<Bullet>();
+            newBullet.SetDirection(lastMovementDirection);
+            //Rigidbody2D newBulletRigidbody = newBullet.GetComponent<Rigidbody2D>();
+            //newBulletRigidbody.linearVelocity = movementDirection * 4;
+
+
         }
     }
 
@@ -39,8 +50,7 @@ public class Player : MonoBehaviour
     {
         ProcessDamage();
         MovePlayer();
-        
-        
+        UpdateBulletSpawnerTransform();
     }
 
     void InitialiseRigidBody(){
@@ -53,10 +63,21 @@ public class Player : MonoBehaviour
     }
 
     void MovePlayer(){
-        speedX = Input.GetAxisRaw("Horizontal") * movementSpeed;
-        speedY = Input.GetAxisRaw("Vertical") * movementSpeed;
-        playerRigidBody.linearVelocity = new Vector2(speedX, speedY);
+        UpdateMovementDirection();
+        playerRigidBody.linearVelocity = movementDirection * movementSpeed;
         Director.UpdatePlayerPosition((Vector2)transform.position);
+    }
+
+    void UpdateMovementDirection(){
+        movementDirection.x = Input.GetAxisRaw("Horizontal");
+        movementDirection.y = Input.GetAxisRaw("Vertical");
+        movementDirection = movementDirection.normalized;
+        if (movementDirection != new Vector2(0, 0))
+            lastMovementDirection = movementDirection;
+    }
+
+    void UpdateBulletSpawnerTransform(){
+        bulletSpawner.transform.position = (Vector2)transform.position + lastMovementDirection;
     }
 
     void ProcessDamage(){

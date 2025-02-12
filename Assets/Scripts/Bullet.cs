@@ -3,7 +3,9 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
 
-    public float bulletSpeed = 4f;
+    Vector2 direction = new Vector2(0, 0);
+    public float bulletSpeed = 8f;
+    public float damage = 10f;
     Rigidbody2D rigidBody;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -15,7 +17,11 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rigidBody.linearVelocity = new Vector2(bulletSpeed, 0);
+        rigidBody.linearVelocity = direction.normalized * bulletSpeed;
+    }
+
+    public void SetDirection(Vector2 newDirection){
+        direction = newDirection;
     }
 
     void InitialiseRigidBody(){
@@ -24,8 +30,10 @@ public class Bullet : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D collision2D){
-        if (collision2D.gameObject.tag == "Enemy"){
-            Debug.Log($"Hit enemy {collision2D.gameObject}");
+        GameObject hitObject = collision2D.gameObject;
+        if (hitObject.tag == "Enemy"){
+            Enemy enemy = hitObject.GetComponent<Enemy>();
+            enemy.TakeDamage(damage);
             Destroy(gameObject);
         }
     }
