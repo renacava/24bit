@@ -8,20 +8,18 @@ public class Bullet : MonoBehaviour
     float damage = 1f;
     Rigidbody2D rigidBody;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         InitialiseRigidBody();
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        rigidBody.linearVelocity = direction.normalized * bulletSpeed;
+        Move();
     }
 
-    public void SetDirection(Vector2 newDirection){
-        direction = newDirection;
+    void Move(){
+        rigidBody.linearVelocity = direction.normalized * bulletSpeed;
     }
 
     void InitialiseRigidBody(){
@@ -29,14 +27,18 @@ public class Bullet : MonoBehaviour
         rigidBody.gravityScale = 0;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision2D){
-        GameObject hitObject = collision2D.gameObject;
-        string hitTag = hitObject.tag;
-        switch (hitTag){
+    public void SetDirection(Vector2 newDirection){
+        direction = newDirection;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision2D){
+        ResolveCollision(collision2D.gameObject);
+    }
+
+    void ResolveCollision(GameObject hitObject){
+        switch (hitObject.tag){
             case "Enemy":
-                Enemy enemy = hitObject.GetComponent<Enemy>();
-                enemy.TakeDamage(damage);
-                Destroy(gameObject);
+                OnHitEnemy(hitObject);
                 break;
             case "Player":
                 break;
@@ -44,6 +46,11 @@ public class Bullet : MonoBehaviour
                 Destroy(gameObject);
                 break;
         }
-        
+    }
+
+    void OnHitEnemy(GameObject hitObject){
+        Enemy enemy = hitObject.GetComponent<Enemy>();
+        enemy.TakeDamage(damage);
+        Destroy(gameObject);
     }
 }
