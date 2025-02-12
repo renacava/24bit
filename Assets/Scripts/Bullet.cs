@@ -5,7 +5,7 @@ public class Bullet : MonoBehaviour
 
     Vector2 direction = new Vector2(0, 0);
     public float bulletSpeed = 8f;
-    public float damage = 10f;
+    float damage = 1f;
     Rigidbody2D rigidBody;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -31,10 +31,19 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision2D){
         GameObject hitObject = collision2D.gameObject;
-        if (hitObject.tag == "Enemy"){
-            Enemy enemy = hitObject.GetComponent<Enemy>();
-            enemy.TakeDamage(damage);
-            Destroy(gameObject);
+        string hitTag = hitObject.tag;
+        switch (hitTag){
+            case "Enemy":
+                Enemy enemy = hitObject.GetComponent<Enemy>();
+                enemy.TakeDamage(damage);
+                Destroy(gameObject);
+                break;
+            case "Player":
+                break;
+            default:
+                Destroy(gameObject);
+                break;
         }
+        
     }
 }
