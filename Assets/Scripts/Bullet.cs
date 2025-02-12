@@ -4,7 +4,7 @@ public class Bullet : MonoBehaviour
 {
 
     Vector2 direction = new Vector2(0, 0);
-    public float bulletSpeed = 8f;
+    float bulletSpeed = 12f;
     float damage = 1f;
     Rigidbody2D rigidBody;
 
@@ -20,6 +20,7 @@ public class Bullet : MonoBehaviour
 
     void Move(){
         rigidBody.linearVelocity = direction.normalized * bulletSpeed;
+        //rigidBody.linearVelocity = new Vector2(1, 0) * bulletSpeed;
     }
 
     void InitialiseRigidBody(){
@@ -41,6 +42,8 @@ public class Bullet : MonoBehaviour
                 OnHitEnemy(hitObject);
                 break;
             case "Player":
+                break;
+            case "Bullet":
                 break;
             default:
                 Destroy(gameObject);

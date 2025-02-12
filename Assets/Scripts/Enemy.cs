@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour
     Vector2 CalculateTargetDirection(){
         Vector2 targetHeading = target - (Vector2)transform.position;
         float targetDistance = targetHeading.magnitude;
-        return targetHeading / targetDistance;;
+        return targetHeading / targetDistance;
     }
 
     void ResetHealth(){

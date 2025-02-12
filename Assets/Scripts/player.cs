@@ -35,16 +35,13 @@ public class Player : MonoBehaviour
     void Update(){
         if (Input.GetKeyDown(KeyCode.Space)){
             Vector2 spawnPosition = bulletSpawner.transform.position;
-            
-            //GameObject newBullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
-            Bullet newBullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity).GetComponent<Bullet>();
+            Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, lastMovementDirection);
+            Bullet newBullet = Instantiate(bulletPrefab, spawnPosition, toRotation).GetComponent<Bullet>();
             newBullet.SetDirection(lastMovementDirection);
-            //Rigidbody2D newBulletRigidbody = newBullet.GetComponent<Rigidbody2D>();
-            //newBulletRigidbody.linearVelocity = movementDirection * 4;
-
-
         }
     }
+
+    
 
     void FixedUpdate()
     {
