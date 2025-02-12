@@ -19,22 +19,28 @@ public class Player : MonoBehaviour
     public float maxHealth = 100;
     public float health = 1;
     public Image healthbarImage;
+
+    //bullets
+    public GameObject bulletPrefab;
     
     void Start()
     {
         InitialiseRigidBody();
         ResetHealth();
-        MyCoolFunc(true ? 1 : 2);
     }
 
-    void MyCoolFunc(int x){
-        x = x + 1;
+    void Update(){
+        if (Input.GetKeyDown(KeyCode.Space)){
+            Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        }
     }
 
     void FixedUpdate()
     {
         ProcessDamage();
         MovePlayer();
+        
+        
     }
 
     void InitialiseRigidBody(){

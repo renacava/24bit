@@ -182,6 +182,7 @@ MonoBehaviour:
   maxHealth: 100
   health: 100
   healthbarImage: {fileID: 5764281400053429922}
+  bulletPrefab: {fileID: 1412173543784690628, guid: 91c4e7ab6ef19c840af6f4490da9a7bc, type: 3}
 --- !u!50 &1651858805853108257
 Rigidbody2D:
   serializedVersion: 5
@@ -247,7 +248,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.14, y: 0.16}
+    oldSize: {x: 0.875, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
