@@ -24,6 +24,11 @@ public class Player : MonoBehaviour
     {
         InitialiseRigidBody();
         ResetHealth();
+        MyCoolFunc(true ? 1 : 2);
+    }
+
+    void MyCoolFunc(int x){
+        x = x + 1;
     }
 
     void FixedUpdate()
