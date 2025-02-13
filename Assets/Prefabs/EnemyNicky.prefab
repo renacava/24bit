@@ -18,15 +18,15 @@ PrefabInstance:
       objectReference: {fileID: -2256115316225675419, guid: 6a5e0961b5dd5714d82ff6f7f1db52f6, type: 3}
     - target: {fileID: 5732017969099214319, guid: 771b68c7cb3f6d04999d3f59fa33e8ec, type: 3}
       propertyPath: health
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5732017969099214319, guid: 771b68c7cb3f6d04999d3f59fa33e8ec, type: 3}
       propertyPath: maxHealth
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5732017969099214319, guid: 771b68c7cb3f6d04999d3f59fa33e8ec, type: 3}
       propertyPath: movementSpeed
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 5763508201249720041, guid: 771b68c7cb3f6d04999d3f59fa33e8ec, type: 3}
       propertyPath: m_LocalPosition.x

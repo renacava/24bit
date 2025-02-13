@@ -25,23 +25,27 @@ public class Player : MonoBehaviour
     //bullets
     public GameObject bulletPrefab;
     public GameObject bulletSpawner;
+    public AudioSource gunAudio;
+    public AudioClip shootSound;
     
+    //enemies
+    public List<GameObject> enemyPrefabs;
+    public float spawnRange = 10f;
+
     void Start()
     {
         InitialiseRigidBody();
         ResetHealth();
+        InvokeRepeating("SpawnEnemy", 1, 2);
     }
 
     void Update(){
-        if (Input.GetKeyDown(KeyCode.Space)){
-            Vector2 spawnPosition = bulletSpawner.transform.position;
-            Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, lastMovementDirection);
-            Bullet newBullet = Instantiate(bulletPrefab, spawnPosition, toRotation).GetComponent<Bullet>();
-            newBullet.SetDirection(lastMovementDirection);
-        }
+        if (Input.GetKeyDown(KeyCode.Space))
+            FireBullet();
+        if (Input.GetKeyDown(KeyCode.E))
+            SpawnEnemy();
+        
     }
-
-    
 
     void FixedUpdate()
     {
@@ -57,6 +61,14 @@ public class Player : MonoBehaviour
 
     void ResetHealth(){
         health = maxHealth;
+    }
+
+    void FireBullet(){
+        Vector2 spawnPosition = bulletSpawner.transform.position;
+        Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, lastMovementDirection);
+        Bullet newBullet = Instantiate(bulletPrefab, spawnPosition, toRotation).GetComponent<Bullet>();
+        newBullet.SetDirection(lastMovementDirection);
+        gunAudio.PlayOneShot(shootSound);
     }
 
     void MovePlayer(){
@@ -111,6 +123,25 @@ public class Player : MonoBehaviour
 
     void UpdateHealthbar(){
         healthbarImage.fillAmount = health / maxHealth;
+    }
+
+    float Random1Minus1(){
+        if (Random.Range(-1, 1) > 0)
+            return 1;
+        else
+            return -1;
+    }
+
+    Vector3 GetRandomPointAroundSelf(float distance){
+        //Vector3 point = Random.onUnitSphere * distance;
+        //return transform.position + (new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), 0).normalized * distance);
+        //return Vector3.Scale(point + transform.position, new Vector3(1, 1, 0));
+        return (Vector2)transform.position + (Random.insideUnitCircle.normalized * distance);
+    }
+
+    void SpawnEnemy(){
+        int index = Random.Range(0, enemyPrefabs.Count);
+        Instantiate(enemyPrefabs[index], GetRandomPointAroundSelf(spawnRange), Quaternion.identity);
     }
 
 }

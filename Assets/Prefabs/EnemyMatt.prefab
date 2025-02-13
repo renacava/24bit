@@ -22,11 +22,11 @@ PrefabInstance:
       objectReference: {fileID: -7019249064450493083, guid: 49d340b6506c69e45a2f6dd15050f340, type: 3}
     - target: {fileID: 5732017969099214319, guid: 771b68c7cb3f6d04999d3f59fa33e8ec, type: 3}
       propertyPath: health
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5732017969099214319, guid: 771b68c7cb3f6d04999d3f59fa33e8ec, type: 3}
       propertyPath: maxHealth
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5732017969099214319, guid: 771b68c7cb3f6d04999d3f59fa33e8ec, type: 3}
       propertyPath: movementSpeed

@@ -6,6 +6,9 @@ public class Enemy : MonoBehaviour
     public float movementSpeed = 1.25f;
     public float maxHealth = 2f;
     public float health = 2f;
+    public GameObject deathSFXPrefab;
+    public AudioSource hitAudioSource;
+    public AudioClip hitSound;
     Rigidbody2D enemyRigidBody;
     Vector2 target;
 
@@ -46,11 +49,14 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(float amount){
         health -= amount;
+        hitAudioSource.PlayOneShot(hitSound);
         if (health <= 0)
             Die();
+        
     }
 
     void Die(){
+        Instantiate(deathSFXPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

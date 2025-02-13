@@ -18,4 +18,6 @@ public static class Director
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    
+
 }
